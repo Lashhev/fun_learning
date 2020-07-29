@@ -2,6 +2,7 @@
 
 using namespace Eigen;
 using namespace std;
+using namespace fun_learning;
 
 Layer::Layer()
 {
@@ -97,7 +98,7 @@ uint16_t Layer::size() const
     return __neurons.size();
 }
 
-Eigen::MatrixXd operator*(const Eigen::MatrixXd& input_values, Layer l)
+Eigen::MatrixXd fun_learning::operator*(const Eigen::MatrixXd& input_values, Layer l)
 {
     Eigen::MatrixXd result(input_values.rows(), l.size());
     for(uint16_t i=0; i < l.size();i++)

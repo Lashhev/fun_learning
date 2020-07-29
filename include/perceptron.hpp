@@ -5,7 +5,7 @@
 #include <eigen3/Eigen/Dense>
 #include <functional>
 #include <random>
-#include <version_info.h>
+#include "version_info.h"
 
 namespace fun_learning
 {

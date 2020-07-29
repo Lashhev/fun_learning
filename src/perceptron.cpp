@@ -3,6 +3,7 @@
 
 using namespace Eigen;
 using namespace std;
+using namespace fun_learning;
 
 Perceptron::Perceptron(uint16_t input_number, double bias, const Eigen::VectorXd& weights, std::string activation_func):__weights_number(input_number)
 {
@@ -79,7 +80,7 @@ void Perceptron::__set_random_weights(uint16_t weight_number, double min_val, do
     __synaptic_weights = Eigen::VectorXd::Zero(weight_number).unaryExpr([&](double dummy){return dist(e2);});
 }
 
-Eigen::VectorXd operator*(const MatrixXd& input_values, Perceptron p)
+Eigen::VectorXd fun_learning::operator*(const MatrixXd& input_values, Perceptron p)
 {
     Eigen::VectorXd weights;
     double bias;
