@@ -2,6 +2,7 @@
 #define __VERSION_INFO_H
 
 #define LIB_NAME          "fun_learning"
+#define LIB_BUILD_TYPE    "DEVELOP"
 #define LIB_VERSION       "0.0.1"
 #define LIB_DATE          "29-07-2020"
 
