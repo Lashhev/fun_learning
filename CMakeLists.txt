@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(test1)
+project(fun_learning)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -21,5 +21,5 @@ add_library(neural_layer src/neural_layer.cpp)
 target_link_libraries(neural_layer perceptron)
 
 
-add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries (${PROJECT_NAME} neural_layer)
+add_executable(${PROJECT_NAME}_test main.cpp)
+target_link_libraries (${PROJECT_NAME}_test neural_layer)
