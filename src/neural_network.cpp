@@ -65,10 +65,12 @@ void NeuralNetwork::back_propogation__(const RowVectorXd & input_values,
                                         const RowVectorXd & target_result, 
                                         double learning_scale, double fval)
 {
-    double e_t = fval+50;
     uint32_t cycle_num = 0;
     vector<MatrixXd> each_layers_out;
     MatrixXd results;
+    feed_forward_and_remember(input_values, each_layers_out);
+    results = each_layers_out.back();
+    double e_t = (0.5*(target_result - results).array().square()).sum();
     while (e_t > fval)
     {
         cycle_num++;
@@ -102,7 +104,10 @@ void NeuralNetwork::back_propogation__(const RowVectorXd & input_values,
     } 
 }
 
-
+NeuralLayer& NeuralNetwork::operator[](uint16_t key)
+{
+    return __layers[key];
+}
 
 // void NeuralNetwork::back_propogation(const Eigen::RowVectorXd & input_values, 
 //                                         Eigen::RowVectorXd & target_result, 
