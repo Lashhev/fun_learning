@@ -3,6 +3,7 @@
 
 #include "neural_layer.hpp"
 #include <vector>
+#include <yaml-cpp/yaml.h>
 namespace fun_learning
 {
 class NeuralNetwork
@@ -23,10 +24,12 @@ public:
     void feed_forward(const Eigen::MatrixXd & input_values, Eigen::MatrixXd & results);
     void feed_forward_and_remember(const Eigen::MatrixXd & input_values, std::vector<Eigen::MatrixXd>& each_layers_outputs_);
 
+    NeuralLayer get_layer(uint16_t key) const;
     void add(const NeuralLayer &layer);
     void insert(uint16_t i, const NeuralLayer &layer);
     void remove(uint16_t i);
     void pop_back();
+    size_t size() const;
     void train(const Eigen::MatrixXd & input_values, 
                                         const Eigen::MatrixXd & target_result, 
                                         double learning_scale, double fval);
@@ -41,4 +44,14 @@ private:
     // Parameters __params;
 };
 } // fun_learning
+
+namespace YAML
+{
+template <>
+struct convert<fun_learning::NeuralNetwork> {
+  static Node encode(const fun_learning::NeuralNetwork& rhs);
+
+  YAML_CPP_API static bool decode(const Node& node, fun_learning::NeuralNetwork& rhs);
+};
+} // YAML
 #endif //__NEURAL_NETWORK_HPP__
