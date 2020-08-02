@@ -1,40 +1,56 @@
 #ifndef __NEURON_LAYER_HPP__
 #define __NEURON_LAYER_HPP__
 
-#include "perceptron.hpp"
-#include <vector>
+#include <iostream>
+#include <eigen3/Eigen/Dense>
+#include <functional>
+#include "version_info.h"
 
 namespace fun_learning
 {
-
-class Layer
+template<typename MatrixT>
+void printM(const MatrixT& M, const std::string& name)
+{
+    std::cout << name << " = \n" << M << std::endl << std::endl;
+}
+class NeuralLayer
 {
 public:
-    Layer();
-    Layer(uint16_t neurons_number, uint16_t inputs_number);
+    NeuralLayer(uint16_t input_number, uint16_t neuron_number, const Eigen::VectorXd &bias, const Eigen::MatrixXd& weights, std::string activation_func="sigmoid");
+    NeuralLayer(uint16_t input_number,uint16_t neuron_number=1,  double min_val=-5.0, double max_val=5.0, std::string activation_func="sigmoid");
+    
+    // void back_propogation(const Eigen::RowVectorXd & input_values, 
+    //                                     Eigen::RowVectorXd & target_result, 
+    //                                     double learning_scale,
+    //                                     double fval=0.001);
+    void set_bias(const Eigen::VectorXd &bias);
 
-    Layer(uint16_t neurons_number, 
-          uint16_t inputs_number, 
-          Eigen::VectorXd biases, 
-          Eigen::MatrixXd weights);
-    void add(const Perceptron &node);
-    void insert(uint16_t i, const Perceptron &node);
-    void remove(uint16_t i);
-    void clear();
-    uint16_t size() const;
     void set_weights(const Eigen::MatrixXd& weights);
-    void set_biases(const Eigen::VectorXd& biases);
-    void get_biases(Eigen::VectorXd& biases) const;
+
+    void set_activation_func(const std::string &func_type);
+
     void get_weights(Eigen::MatrixXd& weights) const;
-    Perceptron& operator[](uint16_t key);
-private:
-    void __create_neurons(uint16_t neurons_number, uint16_t inputs_number);
-private:
-    std::vector<Perceptron> __neurons;
+
+    void get_biases(Eigen::VectorXd &bias) const;
+    std::function<Eigen::MatrixXd(Eigen::MatrixXd, double)>& get_active_func();
+
+    void add_neuron(const Eigen::VectorXd &weights);
+    void remove(uint16_t n);
+    void clear();
+
+protected:
+// EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+    void __choose_activation_func(const std::string& func_type);
+
+    void __set_random_weights(double min_val=-5, double max_val=5);
+    
+    Eigen::MatrixXd __synaptic_weights;
+    uint16_t __weights_number;
+    uint16_t __neurons_number;
+    Eigen::VectorXd __bias;
+    std::function<Eigen::MatrixXd(Eigen::MatrixXd, double)> __activation_func;
 };
 
-Eigen::MatrixXd operator*(const Eigen::MatrixXd& input_values, Layer l);
-
+Eigen::MatrixXd operator*(const Eigen::MatrixXd& input_values, NeuralLayer p);
 } //fun_learning
-
-#endif //__NEURON_LAYER_HPP__
+#endif // __NEURON_LAYER_HPP__
