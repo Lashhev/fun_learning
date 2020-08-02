@@ -2,8 +2,9 @@
 namespace fun_learning
 {
 
-Eigen::VectorXd sigmoid(const Eigen::VectorXd & x, double a=1.0);
-Eigen::VectorXd tanh_func(const Eigen::VectorXd &  x, double a=1.0);
-Eigen::VectorXd binary_step(const Eigen::VectorXd &  x, double threshold=1.0);
+Eigen::MatrixXd sigmoid(const Eigen::MatrixXd & x, double a=1.0);
+Eigen::MatrixXd tanh_func(const Eigen::MatrixXd &  x, double a=1.0);
+Eigen::MatrixXd binary_step(const Eigen::MatrixXd &  x, double threshold=1.0);
+Eigen::MatrixXd sigmoid_derivative(const Eigen::MatrixXd &  x);
 
 } //fun_learning
