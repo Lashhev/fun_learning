@@ -49,6 +49,16 @@ void NeuralNetwork::pop_back()
     __layers.pop_back();
 }
 
+size_t NeuralNetwork::size() const
+{
+    return __layers.size();
+}
+
+NeuralLayer NeuralNetwork::get_layer(uint16_t key) const
+{
+    return __layers[key];
+}
+
 void NeuralNetwork::train(const MatrixXd & input_values, 
                                         const MatrixXd & target_result, 
                                         double learning_scale, double fval)
@@ -82,7 +92,7 @@ void NeuralNetwork::back_propogation__(const RowVectorXd & input_values,
         ArrayXXd E, dR, inputs, delta;
         Eigen::MatrixXd weights, new_weights;
         uint16_t layers_num = __layers.size() - 1;
-        for(uint16_t i=layers_num; i > 0;i--)
+        for(int16_t i=layers_num; i >= 0;i--)
         {
             /// Process output layer
             results = each_layers_out[i+1];
@@ -99,16 +109,42 @@ void NeuralNetwork::back_propogation__(const RowVectorXd & input_values,
             delta = ArrayXXd(E*dR);
         
             new_weights = weights.array() - learning_scale*delta.replicate(weights.rows(), 1)*inputs.array().transpose().replicate(1, weights.cols());
-            __layers.back().set_weights(new_weights);
+            __layers[i].set_weights(new_weights);
         }
     } 
 }
 
-NeuralLayer& NeuralNetwork::operator[](uint16_t key)
+NeuralLayer& NeuralNetwork::operator[](uint16_t key) 
 {
     return __layers[key];
 }
 
+YAML::Node YAML::convert<fun_learning::NeuralNetwork>::encode(const fun_learning::NeuralNetwork& rhs)
+{
+    Node node;
+    string name;
+    for(size_t i=0; i < rhs.size(); i++)
+    {
+        node.push_back(rhs.get_layer(i));
+    }
+    return node;
+}
+
+bool YAML::convert<fun_learning::NeuralNetwork>::decode(const YAML::Node& node, fun_learning::NeuralNetwork& rhs)
+{
+    if(node.IsSequence())
+    {
+        size_t n = node.size();
+        for(uint16_t i=0; i < n; i++)
+        {
+            NeuralLayer layer = node[i].as<NeuralLayer>();
+            rhs.add(layer);
+        }
+        return true;
+    }
+    else
+        return false;
+}
 // void NeuralNetwork::back_propogation(const Eigen::RowVectorXd & input_values, 
 //                                         Eigen::RowVectorXd & target_result, 
 //                                         double learning_scale, double fval)
