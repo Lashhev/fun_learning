@@ -149,6 +149,7 @@ YAML::Node YAML::convert<fun_learning::NeuralLayer>::encode(const fun_learning::
         RowVectorXd neuron_weights = weights.col(i);
         std::vector<double> weights_vec(neuron_weights.data(), neuron_weights.data()+neuron_weights.rows()*neuron_weights.cols());
         neuron["weights"] = weights_vec;
+        neuron["weights"].SetStyle(YAML::EmitterStyle::Flow);
         neuron["bias"] = biases[i];
         node.push_back(neuron);
     }
