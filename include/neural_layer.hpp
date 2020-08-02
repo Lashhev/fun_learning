@@ -5,6 +5,7 @@
 #include <eigen3/Eigen/Dense>
 #include <functional>
 #include "version_info.h"
+#include <yaml-cpp/yaml.h>
 
 namespace fun_learning
 {
@@ -16,6 +17,7 @@ void printM(const MatrixT& M, const std::string& name)
 class NeuralLayer
 {
 public:
+    NeuralLayer();
     NeuralLayer(uint16_t input_number, uint16_t neuron_number, const Eigen::VectorXd &bias, const Eigen::MatrixXd& weights, std::string activation_func="sigmoid");
     NeuralLayer(uint16_t input_number,uint16_t neuron_number=1,  double min_val=-5.0, double max_val=5.0, std::string activation_func="sigmoid");
     
@@ -34,7 +36,7 @@ public:
     void get_biases(Eigen::VectorXd &bias) const;
     std::function<Eigen::MatrixXd(Eigen::MatrixXd, double)>& get_active_func();
 
-    void add_neuron(const Eigen::VectorXd &weights);
+    void add_neuron(const Eigen::VectorXd &weights, double bias);
     void remove(uint16_t n);
     void clear();
 
@@ -53,4 +55,13 @@ protected:
 
 Eigen::MatrixXd operator*(const Eigen::MatrixXd& input_values, NeuralLayer p);
 } //fun_learning
+namespace YAML
+{
+template <>
+struct convert<fun_learning::NeuralLayer> {
+  static Node encode(const fun_learning::NeuralLayer& rhs);
+
+  YAML_CPP_API static bool decode(const Node& node, fun_learning::NeuralLayer& rhs);
+};
+} // YAML
 #endif // __NEURON_LAYER_HPP__
