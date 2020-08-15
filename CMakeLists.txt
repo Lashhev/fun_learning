@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(fun_learning)
+project(fun_learning VERSION 0.1.1)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
