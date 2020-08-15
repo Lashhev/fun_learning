@@ -37,7 +37,7 @@ public:
 private:
     void back_propogation__(const Eigen::RowVectorXd & input_values, 
                                         const Eigen::RowVectorXd & target_result, 
-                                        double learning_scale, double fval);  
+                                        double learning_scale, double &fval);  
                                      
 private:
     std::vector<NeuralLayer> __layers;
