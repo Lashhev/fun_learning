@@ -21,5 +21,5 @@ target_link_libraries(neural_layer activation_functions ${YAML_CPP_LIBRARIES})
 add_library(neural_network src/neural_network.cpp)
 target_link_libraries(neural_network neural_layer)
 
-add_executable(${PROJECT_NAME}_test main.cpp)
-target_link_libraries (${PROJECT_NAME}_test neural_network)
+# add_executable(${PROJECT_NAME}_test src/main.cpp)
+# target_link_libraries (${PROJECT_NAME}_test neural_network)
