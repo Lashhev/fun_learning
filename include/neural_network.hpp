@@ -33,9 +33,18 @@ public:
     void train(const Eigen::MatrixXd & input_values, 
                                         const Eigen::MatrixXd & target_result, 
                                         double learning_scale, double fval);
+    void train2(const Eigen::MatrixXd & input_values, 
+                                        const Eigen::MatrixXd & target_result, 
+                                        double learning_scale, double fval);
+    void train3(const Eigen::MatrixXd & input_values, 
+                                        const Eigen::MatrixXd & target_result, 
+                                        double learning_scale, double fval);
     NeuralLayer& operator[](uint16_t key);
 private:
-    void back_propogation__(const Eigen::RowVectorXd & input_values, 
+    double back_propogation__(const Eigen::RowVectorXd & input_values, 
+                                        const Eigen::RowVectorXd & target_result, 
+                                        double learning_scale, double &fval);  
+    void back_propogation2__(const Eigen::RowVectorXd & input_values, 
                                         const Eigen::RowVectorXd & target_result, 
                                         double learning_scale, double &fval);  
                                      
