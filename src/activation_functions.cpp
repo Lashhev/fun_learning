@@ -1,4 +1,5 @@
 #include "activation_fuctions.hpp"
+#include "version_info.h"
 
 using namespace Eigen;
 
