@@ -177,24 +177,3 @@ bool YAML::convert<fun_learning::NeuralLayer>::decode(const YAML::Node& node, fu
     else
         return false;
 }
-
-// void NeuralLayer::back_propogation(const Eigen::RowVectorXd & input_values, 
-//                                         Eigen::RowVectorXd & target_result, 
-//                                         double learning_scale, double fval)
-// {
-//     double e_t;
-//     uint32_t cycle_num = 0;
-//     do
-//     {
-//         cycle_num++;
-//         Eigen::MatrixXd result = input_values*(*this);
-//         e_t = (0.5*(target_result - result).array().square()).sum();
-//         std::cout << "cicle_num: " << cycle_num << std::endl << "Neuron precision: " << e_t << std::endl;
-//         Eigen::ArrayXXd E = -(target_result-result).array();
-//         Eigen::ArrayXXd dR = sigmoid_derivative(result).array();
-//         Eigen::ArrayXXd delta = ArrayXXd(E*dR).replicate(input_values.cols(), 1);
-//         Eigen::MatrixXd new_weights = __synaptic_weights.array() - learning_scale*delta*input_values.array().transpose().replicate(1, delta.cols());
-//         __synaptic_weights = MatrixXd(new_weights);
-//     } while (e_t > fval);
-//     std::cout << "Training is finished! " << std::endl << "Results:\n" << __synaptic_weights << std::endl;
-// }
