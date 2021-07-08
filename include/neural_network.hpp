@@ -9,17 +9,7 @@ namespace fun_learning
 class NeuralNetwork
 {
 public:
-    // struct Parameters
-    // {
-    //     uint16_t inputs_number;
-    //     std::vector<uint16_t> nodes_in_layer;
-    //     uint16_t layers_number;
-    //     uint16_t outputs_number;
-    //     std::string activation_func_type;
-    // };
-
     NeuralNetwork();
-    // NeuralNetwork(const Parameters &params);
 
     void feed_forward(const Eigen::MatrixXd & input_values, Eigen::MatrixXd & results);
     void feed_forward_and_remember(const Eigen::MatrixXd & input_values, std::vector<Eigen::MatrixXd>& each_layers_outputs_);
@@ -33,21 +23,13 @@ public:
     void train(const Eigen::MatrixXd & input_values, 
                                         const Eigen::MatrixXd & target_result, 
                                         double learning_scale, double fval);
-    void train2(const Eigen::MatrixXd & input_values, 
-                                        const Eigen::MatrixXd & target_result, 
-                                        double learning_scale, double fval);
-    void train3(const Eigen::MatrixXd & input_values, 
-                                        const Eigen::MatrixXd & target_result, 
-                                        double learning_scale, double fval);
     NeuralLayer& operator[](uint16_t key);
 private:
     double back_propogation__(const Eigen::RowVectorXd & input_values, 
                                         const Eigen::RowVectorXd & target_result, 
-                                        double learning_scale, double &fval);  
-    void back_propogation2__(const Eigen::RowVectorXd & input_values, 
-                                        const Eigen::RowVectorXd & target_result, 
-                                        double learning_scale, double &fval);  
-                                     
+                                        double learning_scale, double fval);            
+    void update_layer_weights(const Eigen::MatrixXd& old_weights, const Eigen::ArrayXXd& delta, 
+                              const Eigen::ArrayXXd& inputs, Eigen::MatrixXd& new_weights, double learning_scale);
 private:
     std::vector<NeuralLayer> __layers;
     // Parameters __params;
