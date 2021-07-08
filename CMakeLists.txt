@@ -17,11 +17,10 @@ find_package(yaml-cpp 0.5.2 REQUIRED)
 string(TIMESTAMP TODAY "%Y-%m-%d")
 configure_file(config/version_info.h.in version_info.h)
 # include_directories(include ${YAML_CPP_INCLUDE_DIR})
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_library(activation_functions src/activation_functions.cpp)
 target_link_libraries(activation_functions Eigen3::Eigen)
-target_include_directories(activation_functions PUBLIC include)
+target_include_directories(activation_functions PUBLIC include ${CMAKE_CURRENT_BINARY_DIR})
 
 add_library(neural_layer src/neural_layer.cpp)
 target_link_libraries(neural_layer activation_functions ${YAML_CPP_LIBRARIES})
