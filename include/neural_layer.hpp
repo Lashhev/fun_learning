@@ -19,12 +19,8 @@ class NeuralLayer
 public:
     NeuralLayer();
     NeuralLayer(uint16_t input_number, uint16_t neuron_number, const Eigen::VectorXd &bias, const Eigen::MatrixXd& weights, std::string activation_func="sigmoid");
-    NeuralLayer(uint16_t input_number,uint16_t neuron_number=1,  double min_val=-5.0, double max_val=5.0, std::string activation_func="sigmoid");
+    NeuralLayer(uint16_t input_number,uint16_t neuron_number=1,  double min_val=-0.1, double max_val=0.1, std::string activation_func="sigmoid");
     
-    // void back_propogation(const Eigen::RowVectorXd & input_values, 
-    //                                     Eigen::RowVectorXd & target_result, 
-    //                                     double learning_scale,
-    //                                     double fval=0.001);
     void set_bias(const Eigen::VectorXd &bias);
 
     void set_weights(const Eigen::MatrixXd& weights);
