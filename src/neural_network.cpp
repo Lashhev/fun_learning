@@ -63,7 +63,7 @@ NeuralLayer NeuralNetwork::get_layer(uint16_t key) const
 
 void NeuralNetwork::train(const MatrixXd & input_values, 
                                         const MatrixXd & target_result, 
-                                        double learning_scale, double fval)
+                                        double learning_scale, double fval, bool shuffle)
 {
     double fval_ = fval;
     uint32_t cycle_num = 0;
@@ -74,9 +74,12 @@ void NeuralNetwork::train(const MatrixXd & input_values,
         std::vector<uint32_t> indexes;
         for(uint32_t i=0; i < input_values.rows(); i++)
             indexes.push_back(i);
-        std::random_device rd;
-        std::mt19937 g(rd());
-        std::shuffle(indexes.begin(), indexes.end(), g);
+        if(shuffle)
+        {
+            std::random_device rd;
+            std::mt19937 g(rd());
+            std::shuffle(indexes.begin(), indexes.end(), g);
+        }
         for(uint16_t i=0; i < input_values.rows();i++)
         {
             if(back_propogation__(input_values.row(indexes[i]), target_result.row(indexes[i]), learning_scale, fval_) <= fval_)

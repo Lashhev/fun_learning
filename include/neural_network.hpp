@@ -22,7 +22,7 @@ public:
     size_t size() const;
     void train(const Eigen::MatrixXd & input_values, 
                                         const Eigen::MatrixXd & target_result, 
-                                        double learning_scale, double fval);
+                                        double learning_scale, double fval, bool shuffle=false);
     NeuralLayer& operator[](uint16_t key);
 private:
     double back_propogation__(const Eigen::RowVectorXd & input_values, 
